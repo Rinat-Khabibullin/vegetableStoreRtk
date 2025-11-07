@@ -16,4 +16,4 @@ Currently, two official plugins are available:
 npm install
 npm run test
 
-![Тесты успешно проходят]<img width="1385" height="845" alt="Снимок экрана 2025-11-07 в 16 58 10" src="https://github.com/user-attachments/assets/1a82ddc4-7fbe-4f80-ab2c-e0600ef4305f" />
+![Тесты успешно проходят] https://github.com/user-attachments/assets/1a82ddc4-7fbe-4f80-ab2c-e0600ef4305f
