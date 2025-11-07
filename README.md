@@ -1,4 +1,8 @@
-# React + TypeScript + Vite
+
+ХОСТИНГ ПО ССЫЛКЕ!
+https://rinat-khabibullin.github.io/vegetable-store
+ХОСТИНГ ПО ССЫЛКЕ!
+
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
