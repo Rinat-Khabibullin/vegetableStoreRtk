@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { MantineProvider } from '@mantine/core';
+import { Provider } from 'react-redux';
 import App from './App';
 import '@mantine/core/styles.css';
+import { store } from './store';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -27,7 +29,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         defaultRadius: 'lg',
       }}
     >
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </MantineProvider>
   </React.StrictMode>
 );

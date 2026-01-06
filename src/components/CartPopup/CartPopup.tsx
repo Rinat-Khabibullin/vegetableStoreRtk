@@ -11,15 +11,24 @@ import {
 } from '@mantine/core';
 import { IconPlus, IconMinus } from '@tabler/icons-react';
 import { useClickOutside } from '@mantine/hooks';
-import { useCart } from '../../hooks/useCart';
+import type { Product } from '../../types/Product';
+import type { CartItem } from '../../store/cartSlice';
 
 interface CartPopupProps {
   opened: boolean;
   onClose: () => void;
-  cart: ReturnType<typeof useCart>;
+  items: CartItem[];
+  total: number;
+  onUpdateQuantity: (product: Product, delta: number) => void;
 }
 
-export function CartPopup({ opened, onClose, cart }: CartPopupProps) {
+export function CartPopup({
+  opened,
+  onClose,
+  items,
+  total,
+  onUpdateQuantity,
+}: CartPopupProps) {
   const ref = useClickOutside(onClose);
 
   if (!opened) return null;
@@ -41,7 +50,7 @@ export function CartPopup({ opened, onClose, cart }: CartPopupProps) {
         zIndex: 100,
       }}
     >
-      {cart.items.length === 0 ? (
+      {items.length === 0 ? (
         <Center py="xl">
           <Stack align="center" gap="xs">
             <img
@@ -58,7 +67,7 @@ export function CartPopup({ opened, onClose, cart }: CartPopupProps) {
         </Center>
       ) : (
         <>
-          {cart.items.map(({ product, quantity }) => (
+          {items.map(({ product, quantity }) => (
             <div key={product.id}>
               <Flex style={{ width: '100%', maxWidth: '100%' }} align="flex-start" mb="sm">
                 <div style={{ width: 60, height: 60, flexShrink: 0, marginRight: 12 }}>
@@ -92,7 +101,7 @@ export function CartPopup({ opened, onClose, cart }: CartPopupProps) {
                         radius="md"
                         size="compact-sm"
                         aria-label="decrease-qty"
-                        onClick={() => cart.addToCart(product, -1)}
+                        onClick={() => onUpdateQuantity(product, -1)}
                         style={{ width: 26, height: 26, padding: 0 }}
                       >
                         <IconMinus size={14} />
@@ -103,7 +112,7 @@ export function CartPopup({ opened, onClose, cart }: CartPopupProps) {
                         radius="md"
                         size="compact-sm"
                         aria-label="increase-qty"
-                        onClick={() => cart.addToCart(product, 1)}
+                        onClick={() => onUpdateQuantity(product, 1)}
                         style={{ width: 26, height: 26, padding: 0 }}
                       >
                         <IconPlus size={14} />
@@ -125,7 +134,7 @@ export function CartPopup({ opened, onClose, cart }: CartPopupProps) {
             <Text fw={700}>Total</Text>
 
             <Text fw={700} data-testid="cart-total">
-              ${cart.total.toFixed(2)}
+              ${total.toFixed(2)}
             </Text>
           </Group>
         </>
