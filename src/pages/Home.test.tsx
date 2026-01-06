@@ -50,12 +50,10 @@ describe('Home page', () => {
     const [addButton] = screen.getAllByRole('button', { name: /add to cart/i });
     await user.click(addButton);
 
-    const cartButton = screen.getByText(/^Cart$/).closest('button');
-    expect(cartButton).not.toBeNull();
+    const cartButton = screen.getByLabelText('cart');
     const cartButtonContent = within(cartButton as HTMLElement);
     await waitFor(() => {
       expect(cartButtonContent.getByText('2')).toBeInTheDocument();
-      expect(cartButtonContent.getByText('$160.00')).toBeInTheDocument();
     });
   });
 });

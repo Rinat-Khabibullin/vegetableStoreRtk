@@ -34,7 +34,6 @@ export function Home() {
     <div style={{ backgroundColor: '#F3F5FA', minHeight: '100vh' }}>
       <Header
         count={cartCount}
-        total={cartTotal}
         onCartClick={() => setOpened(true)}
       />
 

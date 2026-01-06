@@ -1,24 +1,13 @@
 
-import {
-  Group,
-  Title,
-  ActionIcon,
-  Indicator,
-  Badge,
-  Paper,
-  Button,
-  Text,
-  Flex,
-} from "@mantine/core";
+import { Group, Badge, Paper, Button, Text, Flex } from "@mantine/core";
 import { IconShoppingCart } from "@tabler/icons-react";
 
 interface HeaderProps {
   count: number;
-  total: number;
   onCartClick: () => void;
 }
 
-export function Header({ count, total, onCartClick }: HeaderProps) {
+export function Header({ count, onCartClick }: HeaderProps) {
   return (
     <Paper
       radius={0}
@@ -82,6 +71,7 @@ export function Header({ count, total, onCartClick }: HeaderProps) {
 
 
         <Button
+          aria-label="cart"
           onClick={onCartClick}
           radius="md"
           style={{
@@ -116,9 +106,6 @@ export function Header({ count, total, onCartClick }: HeaderProps) {
               </div>
             )}
             <span style={{ color: "#fff", fontWeight: 600 }}>Cart</span>
-            <Text c="#fff" fw={600} fz="sm">
-              ${total.toFixed(2)}
-            </Text>
             <IconShoppingCart color="#fff" size={20} />
           </Flex>
         </Button>
