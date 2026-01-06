@@ -21,4 +21,6 @@ npm install
 npm run test
 ```
 
-![Тесты успешно проходят](https://github.com/user-attachments/assets/1a82ddc4-7fbe-4f80-ab2c-e0600ef4305f)
+![Тесты успешно проходят](https://github.com/user-attachments/assets/dabb2fcc-cf08-412e-baaf-336abb7e2e58)
+
+
