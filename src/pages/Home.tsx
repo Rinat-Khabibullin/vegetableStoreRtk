@@ -1,22 +1,26 @@
 import { useEffect, useState } from 'react';
-import { getProducts } from '../api/products';
 import { ProductCard } from '../components/ProductCard/ProductCard';
 import { Header } from '../components/Header/Header';
 import { SimpleGrid, Center, Loader, Container, Title } from '@mantine/core';
-import { useCart } from '../hooks/useCart';
 import { CartPopup } from '../components/CartPopup/CartPopup';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { addToCart, selectCartCount, selectCartItems, selectCartTotal } from '../store/cartSlice';
+import { fetchProducts, selectProducts, selectProductsStatus } from '../store/productsSlice';
 
 export function Home() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const cart = useCart();
+  const dispatch = useAppDispatch();
+  const products = useAppSelector(selectProducts);
+  const status = useAppSelector(selectProductsStatus);
+  const cartItems = useAppSelector(selectCartItems);
+  const cartTotal = useAppSelector(selectCartTotal);
+  const cartCount = useAppSelector(selectCartCount);
   const [opened, setOpened] = useState(false);
 
   useEffect(() => {
-    getProducts().then(setProducts).finally(() => setLoading(false));
-  }, []);
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
-  if (loading) {
+  if (status === 'loading' || status === 'idle') {
     return (
       <div data-testid="loader">
       <Center mt="xl">
@@ -29,8 +33,8 @@ export function Home() {
   return (
     <div style={{ backgroundColor: '#F3F5FA', minHeight: '100vh' }}>
       <Header
-        count={cart.count}
-        total={cart.total}
+        count={cartCount}
+        total={cartTotal}
         onCartClick={() => setOpened(true)}
       />
 
@@ -55,13 +59,25 @@ export function Home() {
           spacing={24}
           verticalSpacing={28}
         >
-          {products.map((p: any) => (
-            <ProductCard key={p.id} product={p} onAdd={cart.addToCart} />
+          {products.map((p) => (
+            <ProductCard
+              key={p.id}
+              product={p}
+              onAdd={(product, qty) => dispatch(addToCart({ product, delta: qty }))}
+            />
           ))}
         </SimpleGrid>
       </Container>
 
-      <CartPopup opened={opened} onClose={() => setOpened(false)} cart={cart} />
+      <CartPopup
+        opened={opened}
+        onClose={() => setOpened(false)}
+        items={cartItems}
+        total={cartTotal}
+        onUpdateQuantity={(product, delta) =>
+          dispatch(addToCart({ product, delta }))
+        }
+      />
     </div>
   );
 }

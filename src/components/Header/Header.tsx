@@ -116,6 +116,9 @@ export function Header({ count, total, onCartClick }: HeaderProps) {
               </div>
             )}
             <span style={{ color: "#fff", fontWeight: 600 }}>Cart</span>
+            <Text c="#fff" fw={600} fz="sm">
+              ${total.toFixed(2)}
+            </Text>
             <IconShoppingCart color="#fff" size={20} />
           </Flex>
         </Button>
