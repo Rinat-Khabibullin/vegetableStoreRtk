@@ -1,6 +1,6 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { Product } from '../types/Product';
-import type { RootState } from './index';
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { Product } from "../types/Product";
+import type { RootState } from "./index";
 
 export interface CartItem {
   product: Product;
@@ -16,7 +16,7 @@ const initialState: CartState = {
 };
 
 const cartSlice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState,
   reducers: {
     addToCart: (
@@ -26,12 +26,16 @@ const cartSlice = createSlice({
       const { product, delta } = action.payload;
       if (!delta) return;
 
-      const existing = state.items.find((item) => item.product.id === product.id);
+      const existing = state.items.find(
+        (item) => item.product.id === product.id
+      );
 
       if (existing) {
         const nextQty = existing.quantity + delta;
         if (nextQty <= 0) {
-          state.items = state.items.filter((item) => item.product.id !== product.id);
+          state.items = state.items.filter(
+            (item) => item.product.id !== product.id
+          );
         } else {
           existing.quantity = nextQty;
         }
@@ -39,11 +43,13 @@ const cartSlice = createSlice({
       }
 
       if (delta > 0) {
-        state.items.push({ product, quantity: delta });
+        state.items = [...state.items, { product, quantity: delta }];
       }
     },
     removeFromCart: (state, action: PayloadAction<number>) => {
-      state.items = state.items.filter((item) => item.product.id !== action.payload);
+      state.items = state.items.filter(
+        (item) => item.product.id !== action.payload
+      );
     },
   },
 });

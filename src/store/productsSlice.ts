@@ -1,5 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getProducts } from '../api/products';
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchProducts } from './thunks/fetchProducts';
+
+export { fetchProducts };
 import type { Product } from '../types/Product';
 import type { RootState } from './index';
 
@@ -14,11 +16,6 @@ const initialState: ProductsState = {
   items: [],
   status: 'idle',
 };
-
-export const fetchProducts = createAsyncThunk('products/fetch', async () => {
-  const products = await getProducts();
-  return products;
-});
 
 const productsSlice = createSlice({
   name: 'products',
